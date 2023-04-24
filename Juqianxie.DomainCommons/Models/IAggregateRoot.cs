@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Juqianxie.DomainCommons.Models
 {
-    internal interface IAggregateRoot
+    public interface IAggregateRoot
     {
     }
 }

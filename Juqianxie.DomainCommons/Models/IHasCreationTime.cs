@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Juqianxie.DomainCommons.Models
 {
-    internal interface IHasCreationTime
+    public interface IHasCreationTime
     {
+        DateTime CreationTime { get; }
     }
 }
