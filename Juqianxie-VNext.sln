@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Commons", "Commons", "{54C00573-A6BC-4EF7-B7B2-4F632DB70973}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileService", "FileService", "{C486538E-40ED-4668-9750-156855E8AD61}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MediaEncoder", "MediaEncoder", "{FCA325C7-2552-46CD-9892-C76153C1F769}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SearchService", "SearchService", "{FB002F31-D2E9-4B12-8F70-E73987643023}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityService", "IdentityService", "{F1330BC9-7798-4456-97A9-1BC54AD96ED2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{0C68E5BB-2662-40D9-840E-3A48CD3A8E02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Juqianxie.Commons", "Juqianxie.Commons\Juqianxie.Commons.csproj", "{27BC2B9D-08DC-4117-AE7C-3DEF4D2704A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C68E5BB-2662-40D9-840E-3A48CD3A8E02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C68E5BB-2662-40D9-840E-3A48CD3A8E02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C68E5BB-2662-40D9-840E-3A48CD3A8E02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C68E5BB-2662-40D9-840E-3A48CD3A8E02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27BC2B9D-08DC-4117-AE7C-3DEF4D2704A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27BC2B9D-08DC-4117-AE7C-3DEF4D2704A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27BC2B9D-08DC-4117-AE7C-3DEF4D2704A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27BC2B9D-08DC-4117-AE7C-3DEF4D2704A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0C68E5BB-2662-40D9-840E-3A48CD3A8E02} = {54C00573-A6BC-4EF7-B7B2-4F632DB70973}
+		{27BC2B9D-08DC-4117-AE7C-3DEF4D2704A4} = {54C00573-A6BC-4EF7-B7B2-4F632DB70973}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D6C134D6-800C-4536-8D47-8BBAF38BBEE9}
+	EndGlobalSection
+EndGlobal
