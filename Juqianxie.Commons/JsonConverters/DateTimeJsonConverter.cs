@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Juqianxie.Commons.JsonConverters
 {
-    internal class DateTimeJsonConverter : JsonConverter<DateTime>
+    public class DateTimeJsonConverter : JsonConverter<DateTime>
     {
         private readonly string _dateFormat;
         public DateTimeJsonConverter()
