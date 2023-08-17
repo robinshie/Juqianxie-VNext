@@ -52,6 +52,10 @@ namespace Juqianxie.EventBus
                 var optionMQ = sp.GetRequiredService<IOptions<IntegrationEventRabbitMQOptions>>().Value;
                 var factory = new ConnectionFactory()
                 {
+
+                    Port = 5673,
+                    UserName = "guest",
+                    Password = "jqxlp123",
                     HostName = optionMQ.HostName,
                     DispatchConsumersAsync = true
                 };

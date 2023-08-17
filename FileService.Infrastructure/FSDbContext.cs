@@ -1,4 +1,5 @@
-﻿using Juqianxie.DomainCommons.Models;
+﻿using FileService.Domain.Entities;
+using Juqianxie.DomainCommons.Models;
 using Juqianxie.Infrastructure.EFCore;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -7,27 +8,20 @@ namespace FileService.Infrastructure
 {
     public class FSDbContext : BaseDbContext
     {
-        private IMediator mediator;
-        public FSDbContext(DbContextOptions options, IMediator? mediator) : base(options, mediator)
+        public DbSet<UploadedItem> UploadItems { get; private set; }
+        private IMediator? mediator;
+     
+        public FSDbContext(DbContextOptions options, IMediator? mediator)
+        : base(options, mediator)
         {
             this.mediator = mediator;
         }
-        public override int SaveChanges()
-        {
-            return base.SaveChanges();
-        }
-        public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
-        {
-            if (mediator != null) 
-            {
-                await mediator.DispatchDomainEventsAsync(this);
-            }
-            var softDeletedEntities = this.ChangeTracker.Entries<ISoftDelete>().Where(e => e.State == EntityState.Modified && e.Entity.IsDeleted)
-                .Select(e => e.Entity).ToList();
-            var result = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-            softDeletedEntities.ForEach(e => this.Entry(e).State = EntityState.Detached);
-            return result;
 
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
         }
     }
 }

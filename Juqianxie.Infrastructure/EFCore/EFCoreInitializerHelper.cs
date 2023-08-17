@@ -32,7 +32,6 @@ namespace Microsoft.EntityFrameworkCore
                 foreach (var dbCtxType in typesInAsm
                     .Where(t => !t.IsAbstract && typeof(DbContext).IsAssignableFrom(t)))
                 {
-                    //similar to serviceCollection.AddDbContextPool<ECDictDbContext>(opt=>new DbContextOptionsBuilder(dbCtxOpt));
                     var methodGenericAddDbContext = methodAddDbContext.MakeGenericMethod(dbCtxType);
                     methodGenericAddDbContext.Invoke(null, new object[] { services, builder, ServiceLifetime.Scoped, ServiceLifetime.Scoped });
                 }

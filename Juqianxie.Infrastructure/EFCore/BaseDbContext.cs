@@ -12,11 +12,12 @@ namespace Juqianxie.Infrastructure.EFCore
     public abstract class BaseDbContext : DbContext
     {
         private IMediator? mediator;
-        public BaseDbContext(DbContextOptions options, IMediator? mediator)
+
+        public BaseDbContext(DbContextOptions options,IMediator mediator) : base(options)
         {
             this.mediator = mediator;
-
         }
+
         public override int SaveChanges()
         {
             return base.SaveChanges();

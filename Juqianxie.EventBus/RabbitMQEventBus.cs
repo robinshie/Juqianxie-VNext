@@ -68,7 +68,8 @@ namespace Juqianxie.EventBus
             //Connection 可以创建多个 Channel ，Channel 不是线程安全的所以不能在线程间共享。
             using (var channel = _persistentConnection.CreateModel())
             {
-                channel.ExchangeDeclare(exchange: _exchangeName, type: "direct");
+                channel.ExchangeDeclare(exchange: _exchangeName, type: "direct" ,durable: true,
+                                    autoDelete: false);
 
                 byte[] body;
                 if (eventData == null)
@@ -186,7 +187,8 @@ namespace Juqianxie.EventBus
 
             var channel = _persistentConnection.CreateModel();
             channel.ExchangeDeclare(exchange: _exchangeName,
-                                    type: "direct");
+                                    type: "direct", durable: true,
+                                    autoDelete: false);
 
             channel.QueueDeclare(queue: _queueName,
                                  durable: true,

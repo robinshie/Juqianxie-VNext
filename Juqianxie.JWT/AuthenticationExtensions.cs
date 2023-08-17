@@ -15,13 +15,16 @@ namespace Juqianxie.JWT
             {
                 x.TokenValidationParameters = new()
                 {
+                   
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = jwtOpt.Issuer,
                     ValidAudience = jwtOpt.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOpt.Key))
+                   
+                   
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOpt.Key ?? "9527"))
                 };
             });
         }

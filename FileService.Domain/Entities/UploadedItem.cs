@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace FileService.Domain.Entities
 {
+    
     public record UploadedItem: BaseEntity,IHasCreationTime
     {
         public DateTime CreationTime { get; private set; }
@@ -50,6 +51,22 @@ namespace FileService.Domain.Entities
                 FileSizeInBytes = fileSizeInBytes,
                 BackupUrl = backupUrl,
                 RemoteUrl = remoteUrl
+            };
+            return item;
+        }
+        public static UploadedItem Create(Guid id, long fileSizeInBytes, string fileName, string fileSHA256Hash, Uri backupUrl)
+        {
+            UploadedItem item = new UploadedItem()
+            {
+                Id = id,
+                CreationTime = DateTime.Now,
+                FileName = fileName,
+                FileSHA256Hash = fileSHA256Hash,
+                FileSizeInBytes = fileSizeInBytes,
+                BackupUrl = backupUrl,
+                RemoteUrl= backupUrl,
+                
+                
             };
             return item;
         }
