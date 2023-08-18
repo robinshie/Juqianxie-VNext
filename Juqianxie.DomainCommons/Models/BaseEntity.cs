@@ -12,7 +12,7 @@ namespace Juqianxie.DomainCommons.Models
     {
         [NotMapped]
         private List<INotification> domainEvents = new();
-        public Guid Id { get; protected set; } = Guid.NewGuid();
+        public long Id { get; protected set; }
 
         public void AddDomainEvent(INotification eventItem)
         {

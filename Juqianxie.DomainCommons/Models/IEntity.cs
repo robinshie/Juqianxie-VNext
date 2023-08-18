@@ -8,6 +8,6 @@ namespace Juqianxie.DomainCommons.Models
 {
     public interface IEntity
     {
-        public Guid Id { get;}
+        public long Id { get;}
     }
 }

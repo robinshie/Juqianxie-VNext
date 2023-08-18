@@ -12,13 +12,15 @@ namespace IdentityService.Infrastructure
         private readonly IdUserManager userManager;
         private readonly RoleManager<Role> roleManager;
         private readonly ILogger<IdRepository> logger;
+        private IdDbContext _dbcontext;
 
 
-        public IdRepository(IdUserManager userManager, RoleManager<Role> roleManager, ILogger<IdRepository> logger)
+        public IdRepository(IdUserManager userManager, RoleManager<Role> roleManager, ILogger<IdRepository> logger, IdDbContext dbcontext)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.logger = logger;
+            _dbcontext = dbcontext;
         }
 
         public Task<User?> FindByPhoneNumberAsync(string phoneNum)
@@ -339,5 +341,12 @@ namespace IdentityService.Infrastructure
             throw new NotImplementedException();
         }
 
+        public async Task CreateUserdeteilsAsync(UserDetails userDetails)
+        {
+            await _dbcontext.UserDetails.AddAsync(userDetails);
+            await _dbcontext.SaveChangesAsync();
+           
+
+        }
     }
 }

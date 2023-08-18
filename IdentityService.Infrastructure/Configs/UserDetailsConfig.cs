@@ -8,17 +8,15 @@ using System.Reflection.Emit;
 
 namespace IdentityService.Infrastructure.Configs
 {
-    class UserConfig : IEntityTypeConfiguration<User>
+    class UserDetailsConfig : IEntityTypeConfiguration<UserDetails>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
-        {
-            builder.ToTable("T_Users");
-            builder.Property(u => u.UserName)
-               .IsRequired()
-               .HasMaxLength(256);
 
+        public void Configure(EntityTypeBuilder<UserDetails> builder)
+        {
+            builder.ToTable("T_UserDetails");
             // builder.HasAlternateKey(x => x.ShowID);
             //builder.HasTableOption("AUTO_INCREMENT", "0");
+
         }
     }
 }

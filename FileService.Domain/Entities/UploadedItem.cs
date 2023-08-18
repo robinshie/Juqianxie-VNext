@@ -40,11 +40,10 @@ namespace FileService.Domain.Entities
         public Uri RemoteUrl { get; private set; }
 
 
-        public static UploadedItem Create(Guid id, long fileSizeInBytes, string fileName, string fileSHA256Hash, Uri backupUrl, Uri remoteUrl)
+        public static UploadedItem Create(long fileSizeInBytes, string fileName, string fileSHA256Hash, Uri backupUrl, Uri remoteUrl)
         {
             UploadedItem item = new UploadedItem()
             {
-                Id = id,
                 CreationTime = DateTime.Now,
                 FileName = fileName,
                 FileSHA256Hash = fileSHA256Hash,
@@ -54,11 +53,10 @@ namespace FileService.Domain.Entities
             };
             return item;
         }
-        public static UploadedItem Create(Guid id, long fileSizeInBytes, string fileName, string fileSHA256Hash, Uri backupUrl)
+        public static UploadedItem Create( long fileSizeInBytes, string fileName, string fileSHA256Hash, Uri backupUrl)
         {
             UploadedItem item = new UploadedItem()
             {
-                Id = id,
                 CreationTime = DateTime.Now,
                 FileName = fileName,
                 FileSHA256Hash = fileSHA256Hash,

@@ -45,20 +45,24 @@ namespace IdentityService.Domain.Entities
         /// 手术方式
         /// </summary>
         public string SurgicalMethod { get; private set; }
-
-
-        public UserDetails Create(Sex sex, int age, string HospitalNumber, DateTime OperationTime, DateTime DischargeTime, string SurgicalMethod)
+        public long UserId { get; private set; }
+        public UserDetails()
         {
-            return new UserDetails
-            {
-                CreationTime = DateTime.Now,
-                Sex = sex,
-                Age = age,
-                HospitalNumber = HospitalNumber,
-                OperationTime = OperationTime,
-                DischargeTime = DischargeTime,
-                SurgicalMethod = SurgicalMethod
-            };
+                
+        }
+        public UserDetails(Sex sex, int age, string hospitalNumber, DateTime operationTime, DateTime dischargeTime, string surgicalMethod, long userid)
+        {
+
+            UserId = userid;
+            CreationTime = DateTime.Now;
+                Sex = sex;
+            Age = age;
+            HospitalNumber = hospitalNumber;
+            OperationTime = operationTime;
+            DischargeTime = dischargeTime;
+            SurgicalMethod = surgicalMethod;
+
+
         }
 
 

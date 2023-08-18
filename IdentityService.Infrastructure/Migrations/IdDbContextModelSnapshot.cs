@@ -134,6 +134,45 @@ namespace IdentityService.Infrastructure.Migrations
                     b.ToTable("T_Users", (string)null);
                 });
 
+            modelBuilder.Entity("IdentityService.Domain.Entities.UserDetails", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DischargeTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("HospitalNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OperationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Sex")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SurgicalMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("T_UserDetails", (string)null);
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
                 {
                     b.Property<int>("Id")

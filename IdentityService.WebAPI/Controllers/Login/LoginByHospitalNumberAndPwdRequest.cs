@@ -10,12 +10,12 @@ public class LoginByHospitalNumberAndPwdRequestValidator : AbstractValidator<Log
         RuleFor(e => e.Password).NotNull().NotEmpty();
     }
 }
-public record LoginByShowIDAndPwdRequest(int ShowID, string Password);
+public record LoginByShowIDAndPwdRequest(long ID, string Password);
 public class LoginByShowIDAndPwdRequestValidator : AbstractValidator<LoginByShowIDAndPwdRequest>
 {
     public LoginByShowIDAndPwdRequestValidator()
     {
-        RuleFor(e => e.ShowID).NotNull();
+        RuleFor(e => e.ID).NotNull();
         RuleFor(e => e.Password).NotNull().NotEmpty();
     }
 }

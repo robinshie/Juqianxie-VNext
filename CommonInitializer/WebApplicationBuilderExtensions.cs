@@ -16,6 +16,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Data.SqlClient;
 using Juqianxie.Commons.JsonConverters;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace CommonInitializer
 {
@@ -70,9 +71,12 @@ namespace CommonInitializer
 
             services.AddMediatR(assemblies);
             //现在不用手动AddMVC了，因此把文档中的services.AddMvc(options =>{})改写成Configure<MvcOptions>(options=> {})这个问题很多都类似
+     
             services.Configure<MvcOptions>(options =>
             {
                 options.Filters.Add<UnitOfWorkFilter>();
+             
+
             });
             services.Configure<JsonOptions>(options =>
             {

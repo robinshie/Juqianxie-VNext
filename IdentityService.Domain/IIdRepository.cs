@@ -17,6 +17,7 @@ namespace IdentityService.Domain
         Task<IdentityResult> CreateAsync(User user, string password);//创建用户
         Task<IdentityResult> AccessFailedAsync(User user);//记录一次登陆失败
         Task<IdentityResult> ChangePasswordAsync(long userId, string password, string password2);//改变密码
+        Task CreateUserdeteilsAsync(UserDetails user);//创建用户
         /// <summary>
         /// 生成重置密码的令牌
         /// </summary>

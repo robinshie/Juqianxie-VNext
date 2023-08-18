@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IdentityService.Infrastructure.Migrations
 {
-    public partial class init4 : Migration
+    public partial class initadduid : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,6 +22,26 @@ namespace IdentityService.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_T_Roles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "T_UserDetails",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Sex = table.Column<int>(type: "int", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    HospitalNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OperationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DischargeTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SurgicalMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_T_UserDetails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,6 +236,9 @@ namespace IdentityService.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "T_UserDetails");
 
             migrationBuilder.DropTable(
                 name: "T_Roles");

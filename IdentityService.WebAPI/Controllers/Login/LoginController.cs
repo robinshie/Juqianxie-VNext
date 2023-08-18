@@ -1,9 +1,12 @@
 ﻿using IdentityService.Domain;
 using IdentityService.Domain.Entities;
+using Juqianxie.ASPNETCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.OpenApi.Models;
 using System.Diagnostics;
 using System.Net;
 using System.Security.Claims;
@@ -30,8 +33,10 @@ namespace IdentityService.WebAPI.Controllers.Login
             if (await repository.FindByNameAsync("admin") != null)
             {
                 return StatusCode((int)HttpStatusCode.Conflict, "已经初始化过了");
+
             }
             User user = new User("admin", "123456");
+
             var r = await repository.CreateAsync(user, "123456");
             Debug.Assert(r.Succeeded);
             var token = await repository.GenerateChangePhoneNumberTokenAsync(user, "18918999999");
@@ -42,6 +47,26 @@ namespace IdentityService.WebAPI.Controllers.Login
             r = await repository.AddToRoleAsync(user, "Admin");
             Debug.Assert(r.Succeeded);
             return Ok();
+        }
+        [HttpPost]
+        [UnitOfWork]
+        [AllowAnonymous]
+        public async Task<ActionResult> CreateWorldUsserdetel(Sex sex, int age, string HospitalNumber, DateTime OperationTime, DateTime DischargeTime, string SurgicalMethod, long userid)
+        {
+
+            UserDetails userDetails = new UserDetails(sex, age, HospitalNumber, OperationTime, DischargeTime, SurgicalMethod, userid);
+            try
+            {
+                await repository.CreateUserdeteilsAsync(userDetails);
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest("发生错误！" + ex.Message?.ToString());
+            }
+
         }
 
         [HttpGet]
@@ -89,11 +114,17 @@ namespace IdentityService.WebAPI.Controllers.Login
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<string>> LoginByHospitalNumberAndPwdAsync(
+        public async Task<ActionResult<LoginlongResponse>> LoginByHospitalNumberAndPwdAsync(
            LoginByHospitalNumberAndPwdRequest req)
         {
             (var checkResult, var token) = await idService.LoginByHospitalNumberAndPwdAsync(req.HospitalNumber, req.Password);
-            if (checkResult.Succeeded) return token!;
+
+            if (checkResult.Succeeded)
+            {
+                var user = await repository.FindByHospitalNumberAsync(req.HospitalNumber);
+
+                return new LoginlongResponse(token!, user.Id);
+            }
             else if (checkResult.IsLockedOut)//尝试登录次数太多
                 return StatusCode((int)HttpStatusCode.Locked, "用户已经被锁定");
             else
@@ -110,11 +141,19 @@ namespace IdentityService.WebAPI.Controllers.Login
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<string>> LoginByShowIDAndPwdAsync(
+        public async Task<ActionResult<LoginResponse>> LoginByIDAndPwdAsync(
         LoginByShowIDAndPwdRequest req)
         {
-            (var checkResult, var token) = await idService.LoginByShowIDAndPwdAsync(req.ShowID, req.Password);
-            if (checkResult.Succeeded) return token!;
+            (var checkResult, var token) = await idService.LoginByIDAndPwdAsync(req.ID, req.Password);
+            if (checkResult.Succeeded)
+            {
+                var user = await repository.FindByIdAsync(req.ID);
+                if (user == null)
+                {
+                    return BadRequest("登录失败");
+                }
+                return new LoginResponse(token!, user.HospitalNumber);
+            }
             else if (checkResult.IsLockedOut)//尝试登录次数太多
                 return StatusCode((int)HttpStatusCode.Locked, "用户已经被锁定");
             else
@@ -169,10 +208,10 @@ namespace IdentityService.WebAPI.Controllers.Login
         [Authorize(Roles = "User")]
         public async Task<ActionResult> ChangeMyPassword(ChangeMyPasswordRequest req)
         {
-            var checkResult = await repository.ChangePasswordAsync(req.id, req.Password,req.Password2);
+            var checkResult = await idService.ChangePasswordAsync(req.id, req.Password, req.Password2);
             if (!checkResult.Succeeded)
             {
-                return BadRequest("修改失败！");
+                return BadRequest(@"修改失败!" + checkResult.Errors.FirstOrDefault());
             }
             return Ok();
         }

@@ -1,5 +1,6 @@
 ﻿using IdentityService.Domain.Entities;
 using Juqianxie.JWT;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System;
@@ -16,12 +17,14 @@ namespace IdentityService.Domain
         private readonly IIdRepository repository;
         private readonly ITokenService tokenService;
         private readonly IOptions<JWTOptions> optJWT;
+        private readonly IDataProtectionProvider protector;
         public IdDomainService(IIdRepository repository,
-                  ITokenService tokenService, IOptions<JWTOptions> optJWT)
+                  ITokenService tokenService, IOptions<JWTOptions> optJWT, IDataProtectionProvider protector)
         {
             this.repository = repository;
             this.tokenService = tokenService;
             this.optJWT = optJWT;
+            this.protector = protector;
         }
         private async Task<SignInResult> CheckUserNameAndPwdAsync(string userName, string password)
         {
@@ -103,7 +106,7 @@ namespace IdentityService.Domain
             }
         }
 
-        public async Task<(SignInResult Result, string? Token)> LoginByShowIDAndPwdAsync(long ID, string password)
+        public async Task<(SignInResult Result, string? Token)> LoginByIDAndPwdAsync(long ID, string password)
         {
             var checkResult = await CheckIDAndPwdAsync(ID, password);
             if (checkResult.Succeeded)
@@ -152,5 +155,9 @@ namespace IdentityService.Domain
             return tokenService.BuildToken(claims, optJWT.Value);
         }
 
+        public Task<IdentityResult> ChangePasswordAsync(long id, string password, string password2)
+        {
+            return repository.ChangePasswordAsync(id, password, password2);
+        }
     }
 }

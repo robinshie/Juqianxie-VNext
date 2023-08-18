@@ -3,9 +3,11 @@ using IdentityService.Domain;
 using IdentityService.Domain.Entities;
 using IdentityService.Infrastructure;
 using IdentityService.Infrastructure.Services;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace IdentityService.WebAPI
 {
@@ -17,20 +19,21 @@ namespace IdentityService.WebAPI
             //string c = "Server = localhost;Database = demo1;User ID = SA;Password=rootXMHh123;TrustServerCertificate=True";
             //builder.Services.AddDbContext<IdDbContext>(options =>
             //options.UseSqlServer(c));
-            
             builder.ConfigureExtraServices(new InitializerOptions
             {
                 LogFilePath = "Logs/IdentityService.log",
                 EventBusQueueName = "IdentityService.WebAPI"
             });
             builder.Services.AddControllers();
-            builder.Services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new() { Title = "IdentityService.WebAPI", Version = "v1" });
-                //c.AddAuthenticationHeader();
-            });
+            builder.Services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo("gen"));
+            //builder.Services.AddScoped<IDataProtectionBuilder>();
 
-            builder.Services.AddDataProtection();
+            builder.Services.AddSwaggerGen(c =>
+              {
+                  c.SwaggerDoc("v1", new() { Title = "IdentityService.WebAPI", Version = "v1" });
+                  //c.AddAuthenticationHeader();
+              });
+
             //登录、注册的项目除了要启用WebApplicationBuilderExtensions中的初始化之外，还要如下的初始化
             //不要用AddIdentity，而是用AddIdentityCore
             //因为用AddIdentity会导致JWT机制不起作用，AddJwtBearer中回调不会被执行，因此总是Authentication校验失败

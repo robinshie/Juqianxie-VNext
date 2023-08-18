@@ -11,6 +11,7 @@ namespace IdentityService.Infrastructure
 {
     public class IdDbContext : IdentityDbContext<User, Role, long>
     {
+        public DbSet<UserDetails> UserDetails { get; set; }
         public IdDbContext(DbContextOptions<IdDbContext> options)
             : base(options)
         {

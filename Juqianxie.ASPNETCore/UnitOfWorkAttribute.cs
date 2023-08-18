@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
+using Microsoft.Extensions.DependencyInjection;
+
 
 namespace Juqianxie.ASPNETCore
 {

@@ -1,13 +1,17 @@
-﻿using IdentityService.Domain;
+﻿using CommonInitializer;
+using IdentityService.Domain;
 using IdentityService.Infrastructure;
 using IdentityService.WebAPI.Events;
+using Juqianxie.ASPNETCore;
 using Juqianxie.EventBus;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Linq;
-
+using System.Reflection;
 
 namespace IdentityService.WebAPI.Controllers.UserAdmin;
 
@@ -19,20 +23,39 @@ public class UserAdminController : ControllerBase
     private readonly IdUserManager userManager;
     private readonly IIdRepository repository;
     private readonly IEventBus eventBus;
+    //private readonly IDataProtector protector;
 
-    public UserAdminController(IdUserManager userManager, IEventBus eventBus, IIdRepository repository)
+
+    public UserAdminController(IdUserManager userManager, IEventBus eventBus, IIdRepository repository)//, IDataProtectionProvider provider)
     {
         this.userManager = userManager;
         this.eventBus = eventBus;
         this.repository = repository;
+        //this.protector = provider.CreateProtector(GetType().FullName); ;
     }
 
     [HttpGet]
-    public Task<UserDTO[]> FindAllUsers()
+    public async Task<string> FindAllUsers()
     {
-        return userManager.Users.Select(u => UserDTO.Create(u)).ToArrayAsync();
+        var list = await userManager.Users.Select(u => UserDTO.Create(u)).ToArrayAsync();
+        var json = JsonConvert.SerializeObject(list, new JsonSerializerSettings()
+        {
+            ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+        });
+        //var pstring = protector.Protect(json);
+        //var u= protector.Unprotect(pstring);
+        return json;
     }
-
+    [HttpGet]
+    [ServiceFilter(typeof(ProtectAtribuild))]
+    public async Task<UserDTO[]> FindAllUsers2()
+    {
+        var list = await userManager.Users.Select(u => UserDTO.Create(u)).ToArrayAsync();
+ 
+        return list;//protector.Protect(str);
+       
+       
+    }
     [HttpGet]
     [Route("{id}")]
     public async Task<UserDTO> FindById(Guid id)
