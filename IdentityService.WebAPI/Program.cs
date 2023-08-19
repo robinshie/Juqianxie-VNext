@@ -19,6 +19,7 @@ namespace IdentityService.WebAPI
             //string c = "Server = localhost;Database = demo1;User ID = SA;Password=rootXMHh123;TrustServerCertificate=True";
             //builder.Services.AddDbContext<IdDbContext>(options =>
             //options.UseSqlServer(c));
+            builder.ConfigureDbConfiguration();
             builder.ConfigureExtraServices(new InitializerOptions
             {
                 LogFilePath = "Logs/IdentityService.log",

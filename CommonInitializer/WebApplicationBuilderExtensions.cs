@@ -22,17 +22,17 @@ namespace CommonInitializer
 {
     public static class WebApplicationBuilderExtensions
     {
-        //public static void ConfigureDbConfiguration(this WebApplicationBuilder builder)
-        //{
-        //    builder.Host.ConfigureAppConfiguration((hostCtx, configBuilder) =>
-        //    {
-        //        //不能使用ConfigureAppConfiguration中的configBuilder去读取配置，否则就循环调用了，因此这里直接自己去读取配置文件
-        //        //var configRoot = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-        //        //string connStr = configRoot.GetValue<string>("DefaultDB:ConnStr");
-        //        string connStr = Environment.GetEnvironmentVariable("DefaultDB:ConnStr");//"Server = localhost;Database = demo1;User ID = SA;Password=rootXMHh123;TrustServerCertificate=True";//Server = localhost;Database = demo1;User ID = SA;Password=rootXMHh123;TrustServerCertificate=True""//builder.Configuration.GetValue<string>("DefaultDB:ConnStr");
-        //        configBuilder.AddDbConfiguration(() => new SqlConnection(connStr), reloadOnChange: true, reloadInterval: TimeSpan.FromSeconds(5));
-        //    });
-        //}
+        public static void ConfigureDbConfiguration(this WebApplicationBuilder builder)
+        {
+            builder.Host.ConfigureAppConfiguration((hostCtx, configBuilder) =>
+            {
+                //不能使用ConfigureAppConfiguration中的configBuilder去读取配置，否则就循环调用了，因此这里直接自己去读取配置文件
+                //var configRoot = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+                //string connStr = configRoot.GetValue<string>("DefaultDB:ConnStr");
+                string connStr = Environment.GetEnvironmentVariable("DefaultDB:ConnStr");//"Server = localhost;Database = demo1;User ID = SA;Password=rootXMHh123;TrustServerCertificate=True";//Server = localhost;Database = demo1;User ID = SA;Password=rootXMHh123;TrustServerCertificate=True""//builder.Configuration.GetValue<string>("DefaultDB:ConnStr");
+                configBuilder.AddDbConfiguration(() => new SqlConnection(connStr), reloadOnChange: true, reloadInterval: TimeSpan.FromSeconds(5));
+            });
+        }
         public static void ConfigureExtraServices(this WebApplicationBuilder builder, InitializerOptions initOptions)
         {
             IServiceCollection services = builder.Services;
@@ -118,13 +118,13 @@ namespace CommonInitializer
             services.AddEventBus(initOptions.EventBusQueueName, assemblies);
 
             //Redis的配置
-            //string redisConnStr = configuration.GetValue<string>("Redis:ConnStr");
-            //IConnectionMultiplexer redisConnMultiplexer = ConnectionMultiplexer.Connect(redisConnStr);
-            //services.AddSingleton(typeof(IConnectionMultiplexer), redisConnMultiplexer);
-            //services.Configure<ForwardedHeadersOptions>(options =>
-            //{
-            //    options.ForwardedHeaders = ForwardedHeaders.All;
-            //});
+            string redisConnStr = configuration.GetValue<string>("Redis:ConnStr");
+            IConnectionMultiplexer redisConnMultiplexer = ConnectionMultiplexer.Connect(redisConnStr);
+            services.AddSingleton(typeof(IConnectionMultiplexer), redisConnMultiplexer);
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders = ForwardedHeaders.All;
+            });
         }
     }
 }
