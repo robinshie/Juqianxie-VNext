@@ -14,6 +14,9 @@ namespace DrainagetubeService.Infrastructure
     {
         public DbSet<DrainageLiquid> DrainageLiquids { get; private set; }
         public DbSet<Drainagetube> Drainagetubes { get; private set; }
+        
+        public DbSet<DrainageUserReporter> DrainageUserReporters { get; private set; }
+        public DbSet<DrainageLiquidReporter> DrainageLiquidReporters { get; private set; }
         public DrainageDbContext(DbContextOptions options, IMediator mediator) : base(options, mediator)
         {
 

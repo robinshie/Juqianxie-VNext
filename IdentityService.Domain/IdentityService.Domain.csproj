@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Juqianxie.DomainCommons\Juqianxie.DomainCommons.csproj" />
+    <ProjectReference Include="..\Juqianxie.EventBus\Juqianxie.EventBus.csproj" />
     <ProjectReference Include="..\Juqianxie.JWT\Juqianxie.JWT.csproj" />
   </ItemGroup>
 

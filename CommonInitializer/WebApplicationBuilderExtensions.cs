@@ -28,9 +28,10 @@ namespace CommonInitializer
             {
                 //不能使用ConfigureAppConfiguration中的configBuilder去读取配置，否则就循环调用了，因此这里直接自己去读取配置文件
                 //var configRoot = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-                //string connStr = configRoot.GetValue<string>("DefaultDB:ConnStr");
-                string connStr = Environment.GetEnvironmentVariable("DefaultDB:ConnStr");//"Server = localhost;Database = demo1;User ID = SA;Password=rootXMHh123;TrustServerCertificate=True";//Server = localhost;Database = demo1;User ID = SA;Password=rootXMHh123;TrustServerCertificate=True""//builder.Configuration.GetValue<string>("DefaultDB:ConnStr");
-                configBuilder.AddDbConfiguration(() => new SqlConnection(connStr), reloadOnChange: true, reloadInterval: TimeSpan.FromSeconds(5));
+                //string connStr = configRoot.GetValue<string>("DefaultDBConnStr");
+                string table = Environment.GetEnvironmentVariable("DefaultDBConntable")?? "T_Configs";
+                string connStr = Environment.GetEnvironmentVariable("DefaultDBConnStr");//"Server = localhost;Database = demo1;User ID = SA;Password=rootXMHh123;TrustServerCertificate=True";//Server = localhost;Database = demo1;User ID = SA;Password=rootXMHh123;TrustServerCertificate=True""//builder.Configuration.GetValue<string>("DefaultDBConnStr");
+                configBuilder.AddDbConfiguration(() => new SqlConnection(connStr),tableName: table, reloadOnChange: true, reloadInterval: TimeSpan.FromSeconds(5));
             });
         }
         public static void ConfigureExtraServices(this WebApplicationBuilder builder, InitializerOptions initOptions)
@@ -44,7 +45,7 @@ namespace CommonInitializer
                 //连接字符串如果放到appsettings.json中，会有泄密的风险
                 //如果放到UserSecrets中，每个项目都要配置，很麻烦
                 //因此这里推荐放到环境变量中。
-                string connStr = Environment.GetEnvironmentVariable("DefaultDB:ConnStr");
+                string connStr = Environment.GetEnvironmentVariable("DefaultDBConnStr");
                 //Console.WriteLine(connStr+"____+++++++++++++++++_______________");
                 if (!string.IsNullOrEmpty(connStr))
                 {

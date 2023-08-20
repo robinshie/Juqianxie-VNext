@@ -9,7 +9,7 @@ namespace DrainagetubeService.WebAPI.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    [Authorize(Roles = "User,Admin")]
+    //[Authorize(Roles = "User,Admin")]
     public class DrainagetubeController : ControllerBase
     {
         IDrainagetubeDomainService _drainagetubeDomainService;

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Juqianxie.DomainCommons\Juqianxie.DomainCommons.csproj" />
+    <ProjectReference Include="..\Juqianxie.EventBus\Juqianxie.EventBus.csproj" />
   </ItemGroup>
 
 </Project>

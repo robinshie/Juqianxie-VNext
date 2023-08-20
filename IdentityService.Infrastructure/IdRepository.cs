@@ -69,7 +69,7 @@ namespace IdentityService.Infrastructure
                 return SignInResult.Success;
             }
         }
-        public async Task<IdentityResult> ChangePasswordAsync(long userId, string password,string password2)
+        public async Task<IdentityResult> ChangePasswordAsync(long userId, string password, string password2)
         {
             if (password.Length < 6)
             {
@@ -86,8 +86,8 @@ namespace IdentityService.Infrastructure
                 err.Description = "查无此人";
                 return IdentityResult.Failed(err);
             }
-            
-            var result =  await userManager.ChangePasswordAsync(user, password, password2);
+
+            var result = await userManager.ChangePasswordAsync(user, password, password2);
             return result;
         }
 
@@ -345,7 +345,12 @@ namespace IdentityService.Infrastructure
         {
             await _dbcontext.UserDetails.AddAsync(userDetails);
             await _dbcontext.SaveChangesAsync();
-           
+
+
+        }
+        public async Task<UserDetails> FindUserdeteilByUidsAsync(long uid)
+        {
+            return await _dbcontext.UserDetails.FirstOrDefaultAsync(u => u.UserId == uid);
 
         }
     }

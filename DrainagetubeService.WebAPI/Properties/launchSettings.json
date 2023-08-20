@@ -22,9 +22,6 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
-      "environmentVariables": {
-        "DefaultDB:ConnStr": "Server =172.17.0.2,1433;Database = demo1;User ID = SA;Password=rootXMHh123;TrustServerCertificate=True"
-      },
       "publishAllPorts": true,
       "useSSL": true
     }

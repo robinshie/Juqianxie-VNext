@@ -24,7 +24,7 @@ namespace DrainagetubeService.Infrastructure
 
         public async Task<DrainageLiquid> AddDrainagetubeAsync(DateTime RecordTime, string LiquidColor, string LiquidProperty, string Liquidodour, string TubeState, int Volume, long Uid, string Tubekey, CancellationToken cancellationToken)
         {
-            return await Add(RecordTime, LiquidColor, LiquidProperty, Liquidodour, TubeState, Volume, Uid,  Tubekey, cancellationToken);
+            return await Add(RecordTime, LiquidColor, LiquidProperty, Liquidodour, TubeState, Volume, Uid, Tubekey, cancellationToken);
         }
 
         public async Task<IEnumerable<DrainageLiquid>> FindAllByPageAsync(int pageindex, int pageLen, CancellationToken cancellationToken)
@@ -37,14 +37,19 @@ namespace DrainagetubeService.Infrastructure
             return await dbcontext.DrainageLiquids.FirstOrDefaultAsync(u => u.Key.ToString() == key);
         }
 
+        public async Task<IEnumerable<DrainageLiquid>> FindByTubeKeysAsync(string tubeke, CancellationToken cancellationToken)
+        {
+            return await dbcontext.DrainageLiquids.Where(u =>u.TubeKey== tubeke).ToListAsync(cancellationToken);
+        }
+
         public async Task<IEnumerable<DrainageLiquid>> FindByuserAsync(long uid, int pageindex, int pageLen, CancellationToken cancellationToken)
         {
             return await dbcontext.DrainageLiquids.Where(u => u.Uid == uid).Skip((pageindex - 1) * pageLen).Take(pageLen).ToListAsync();
         }
         private async Task<DrainageLiquid> Add(DateTime RecordTime, string LiquidColor, string LiquidProperty, string Liquidodour, string TubeState, int Volume, long Uid, string Tubekey, CancellationToken cancellationToken)
         {
-            DrainageLiquid drainagetube = new DrainageLiquid();
-            drainagetube.Create(RecordTime, LiquidColor, LiquidProperty, Liquidodour, TubeState, Volume, Uid,Tubekey);
+            //DrainageLiquid drainagetube = new DrainageLiquid();
+            var drainagetube = DrainageLiquid.Create(RecordTime, LiquidColor, LiquidProperty, Liquidodour, TubeState, Volume, Uid, Tubekey);
             await dbcontext.DrainageLiquids.AddAsync(drainagetube, cancellationToken);
             await dbcontext.SaveChangesAsync();
 

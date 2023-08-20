@@ -17,11 +17,14 @@ namespace FileService.WebAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            //builder.ConfigureDbConfiguration();
+            builder.ConfigureDbConfiguration();
             //builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             builder.ConfigureExtraServices(new InitializerOptions
             {
-                LogFilePath = "Logs/FileService.log"
+                LogFilePath = "Logs/FileService.log",
+
+                EventBusQueueName = "FileService.WebAPI"
             });
 
             string WorkingDir = JsonConvert.SerializeObject (new SMBStorageOptions() { WorkingDir = "/temp/temp" });

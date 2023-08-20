@@ -3,7 +3,7 @@ using Juqianxie.EventBus;
 using Microsoft.Extensions.Logging;
 
 
-namespace IdentityService.WebAPI.Events
+namespace IdentityService.Domain
 {
     [EventName("IdentityService.User.PasswordReset")]
     public class ResetPasswordEventHandler : JsonIntegrationEventHandler<ResetPasswordEvent>

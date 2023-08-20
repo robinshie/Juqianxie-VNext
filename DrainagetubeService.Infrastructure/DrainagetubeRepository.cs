@@ -39,7 +39,17 @@ namespace DrainagetubeService.Infrastructure
 
         public async Task<IEnumerable<Drainagetube>> FindByuserAsync(long uid, int pageindex, int pageLen, CancellationToken cancellationToken)
         {
-            return await dbcontext.Drainagetubes.Where(u=>u.Uid==uid).Skip((pageindex - 1) * pageLen).Take(pageLen).ToListAsync();
+            if (pageindex < 0 && pageLen < 0) 
+            {
+               return await dbcontext.Drainagetubes.Where(u => u.Uid == uid).ToListAsync(cancellationToken);
+            }
+
+            return await dbcontext.Drainagetubes.Where(u=>u.Uid==uid).Skip((pageindex - 1) * pageLen).Take(pageLen).ToListAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<string>> FindKeysByuserAsync(long uid, CancellationToken cancellationToken)
+        {
+           return await dbcontext.Drainagetubes.Where(u => u.Uid == uid).Select(u=>u.Key.ToString()).ToListAsync(cancellationToken);
         }
 
         private async Task<Drainagetube> Add(string TubeType, string TubePosition, string TubeExtention, long Uid,CancellationToken cancellationToken)

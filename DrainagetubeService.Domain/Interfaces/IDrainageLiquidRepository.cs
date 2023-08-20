@@ -11,6 +11,7 @@ namespace DrainagetubeService.Domain
     {   //* 导流管 *//
         Task<DrainageLiquid> AddDrainagetubeAsync(DateTime RecordTime, string LiquidColor, string LiquidProperty, string Liquidodour, string TubeState, int Volume, long Uid, string Tubekey, CancellationToken cancellationToken);
         Task<DrainageLiquid> FindByKeyAsync(string key, CancellationToken cancellationToken);
+        Task<IEnumerable<DrainageLiquid>> FindByTubeKeysAsync(string tubeke, CancellationToken cancellationToken);
         Task<IEnumerable<DrainageLiquid>> FindByuserAsync(long uid, int pageindex, int pageLen, CancellationToken cancellationToken);
         Task<IEnumerable<DrainageLiquid>> FindAllByPageAsync(int pageindex, int pageLen, CancellationToken cancellationToken);
 

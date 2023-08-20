@@ -1,7 +1,6 @@
 ﻿using CommonInitializer;
 using IdentityService.Domain;
 using IdentityService.Infrastructure;
-using IdentityService.WebAPI.Events;
 using Juqianxie.ASPNETCore;
 using Juqianxie.EventBus;
 using Microsoft.AspNetCore.Authorization;
@@ -81,7 +80,7 @@ public class UserAdminController : ControllerBase
         eventBus.Publish("IdentityService.User.Created", userCreatedEvent);
         return Ok();
     }
-
+ 
     [HttpDelete]
     [Route("{id}")]
     public async Task<ActionResult> DeleteAdminUser(long id)

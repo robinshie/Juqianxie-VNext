@@ -1,7 +1,7 @@
 ﻿using IdentityService.Domain;
 using Juqianxie.EventBus;
 
-namespace IdentityService.WebAPI.Events
+namespace IdentityService.Domain
 {
     [EventName("IdentityService.User.Created")]
     public class UserCreatedEventHandler : JsonIntegrationEventHandler<UserCreatedEvent>

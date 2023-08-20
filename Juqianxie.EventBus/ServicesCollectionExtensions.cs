@@ -53,9 +53,9 @@ namespace Juqianxie.EventBus
                 var factory = new ConnectionFactory()
                 {
 
-                    Port = 5673,
-                    UserName = "guest",
-                    Password = "jqxlp123",
+                    Port = 5672,
+                    UserName = optionMQ.UserName,
+                    Password = optionMQ.Password,
                     HostName = optionMQ.HostName,
                     DispatchConsumersAsync = true
                 };
