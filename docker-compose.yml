@@ -1,0 +1,48 @@
+version: '3.4'
+services:
+  drainagetubeservice.webapi:
+    image: ${DOCKER_REGISTRY-}drainagetubeservicewebapi
+    environment: 
+        DefaultDBConnStr: "Server = 172.18.0.2;Database = demo1;User ID = SA;Password=rootXMHh123;TrustServerCertificate=True"
+    networks:
+        my_network:
+            ipv4_address: 172.18.0.7
+    build:
+      context: .
+      dockerfile: DrainagetubeService.WebAPI/Dockerfile
+    ports:
+      - "8080:80"
+      - "4443:443"
+  fileservice.webapi:
+    image: ${DOCKER_REGISTRY-}fileservicewebapi
+    networks:
+        my_network:
+            ipv4_address: 172.18.0.8
+    environment: 
+        DefaultDBConnStr: "Server = 172.18.0.2;Database = demo1;User ID = SA;Password=rootXMHh123;TrustServerCertificate=True"
+    build:
+      context: .
+      dockerfile: FileService.WebAPI/Dockerfile
+    ports:
+      - "8082:80"
+      - "4445:443"
+
+  identityservice.webapi:
+    image: ${DOCKER_REGISTRY-}identityservicewebapi
+    networks:
+        my_network:
+            ipv4_address: 172.18.0.9
+    environment: 
+        DefaultDBConnStr: "Server = 172.18.0.2;Database = demo1;User ID = SA;Password=rootXMHh123;TrustServerCertificate=True"
+    build:
+      context: .
+      dockerfile: IdentityService.WebAPI/Dockerfile
+    ports:
+      - "8083:80"
+      - "4446:443"
+
+networks:
+  my_network:
+    external: true  
+  
+

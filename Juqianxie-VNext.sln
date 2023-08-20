@@ -51,8 +51,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrainagetubeService.WebAPI"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cofig", "cofig", "{9D89DF1A-B0F2-4B26-8627-7A1FAAED7E17}"
 	ProjectSection(SolutionItems) = preProject
+		C:\Users\Robin\Desktop\compos\docker-compose.yml = C:\Users\Robin\Desktop\compos\docker-compose.yml
 		C:\Users\Robin\Desktop\f.sql = C:\Users\Robin\Desktop\f.sql
 	EndProjectSection
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FC6A52D3-601A-478F-B68E-0D45B937B497}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -128,6 +131,10 @@ Global
 		{215C3B20-2DA1-4A81-BFC7-F12FDB5C6894}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{215C3B20-2DA1-4A81-BFC7-F12FDB5C6894}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{215C3B20-2DA1-4A81-BFC7-F12FDB5C6894}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC6A52D3-601A-478F-B68E-0D45B937B497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC6A52D3-601A-478F-B68E-0D45B937B497}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC6A52D3-601A-478F-B68E-0D45B937B497}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC6A52D3-601A-478F-B68E-0D45B937B497}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
