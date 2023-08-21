@@ -13,6 +13,9 @@ namespace DrainagetubeService.Infrastructure
             services.AddScoped<IDrainageLiquidDomainService, DrainageLiquidDomainService>();
             services.AddScoped<IDrainageUserReporterRepository, DrainageUserReporterRepository>();
             services.AddScoped<IDrainageLiquidReporterRepository, DrainageLiquidReporterRepository>();
-        }
+            services.AddScoped<IDrainageLiquidReporterService, DrainageLiquidReporterService>();
+            services.AddScoped<IDrainageUserReporterDomainService, DrainageUserReporterService>();
+            
+    }
     }
 }

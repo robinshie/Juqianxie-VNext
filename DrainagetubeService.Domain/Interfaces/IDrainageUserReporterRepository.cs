@@ -1,4 +1,6 @@
-﻿using DrainagetubeService.Domain.Entities;
+﻿using CommonInitializer;
+using DrainagetubeService.Domain.Entities;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +17,7 @@ namespace DrainagetubeService.Domain
         Task<IEnumerable<DrainageUserReporter>> FindByuserNopageAsync(long uid, CancellationToken cancellationToken);
     
         Task<IEnumerable<string>> FindTubeNameByuserNopageAsync(long uid);
+        Task<IEnumerable<DrainageUserReporter>> FindAllByPageAsync(int pageindex, int pageLen, IEnumerable<JConfig> conditions, CancellationToken cancellationToken);
+        Task<(int, IEnumerable<DrainageUserReporter>)> FindRangeUserReporterAsync(int pageindex, int pageLen, IEnumerable<JConfig> conditions, CancellationToken cancellationToken);
     }
 }

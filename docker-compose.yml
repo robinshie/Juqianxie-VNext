@@ -26,7 +26,6 @@ services:
     ports:
       - "8082:80"
       - "4445:443"
-
   identityservice.webapi:
     image: ${DOCKER_REGISTRY-}identityservicewebapi
     networks:

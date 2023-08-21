@@ -2,6 +2,7 @@
 using DrainagetubeService.Domain.Entities;
 using DrainagetubeService.Domain.Events;
 using DrainagetubeService.Infrastructure;
+using Juqianxie.ASPNETCore;
 using Juqianxie.EventBus;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -12,7 +13,7 @@ namespace DrainagetubeService.WebAPI.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class DrainageLiquidController : ControllerBase
     {
         IDrainageLiquidDomainService _drainageLiquidDomainService;
@@ -66,6 +67,7 @@ namespace DrainagetubeService.WebAPI.Controllers
         }
 
         [HttpPost]
+        [UnitOfWork]
         public async Task<ActionResult<string>> Add(DateTime RecordTime, string LiquidColor, string LiquidProperty, string Liquidodour, string TubeState, int Volume, long Uid, string Tubekey, CancellationToken cancellationToken)
         {
             var result = await _drainageLiquidDomainService.AddDrainageLiquidAsync(RecordTime, LiquidColor, LiquidProperty, Liquidodour, TubeState, Volume, Uid, Tubekey, cancellationToken);
