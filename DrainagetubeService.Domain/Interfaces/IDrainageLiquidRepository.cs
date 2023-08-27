@@ -14,6 +14,6 @@ namespace DrainagetubeService.Domain
         Task<IEnumerable<DrainageLiquid>> FindByTubeKeysAsync(string tubeke, CancellationToken cancellationToken);
         Task<IEnumerable<DrainageLiquid>> FindByuserAsync(long uid, int pageindex, int pageLen, CancellationToken cancellationToken);
         Task<IEnumerable<DrainageLiquid>> FindAllByPageAsync(int pageindex, int pageLen, CancellationToken cancellationToken);
-
+        Task<int> BulkAddDrainageLiquidAsync(IEnumerable<DrainageLiquid> bulkAddRequest, CancellationToken cancellationToken);
     }
 }

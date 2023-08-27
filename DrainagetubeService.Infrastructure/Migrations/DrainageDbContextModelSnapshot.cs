@@ -71,8 +71,8 @@ namespace DrainagetubeService.Infrastructure.Migrations
                     b.Property<long>("Uid")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Volume")
-                        .HasColumnType("int");
+                    b.Property<float>("Volume")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
@@ -149,8 +149,8 @@ namespace DrainagetubeService.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Volum")
-                        .HasColumnType("int");
+                    b.Property<float>("Volum")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
@@ -170,6 +170,10 @@ namespace DrainagetubeService.Infrastructure.Migrations
 
                     b.Property<Guid>("Key")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TransID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TubeExtention")
                         .IsRequired()

@@ -22,6 +22,16 @@ namespace DrainagetubeService.Domain
             return await repository.AddDrainagetubeAsync(RecordTime, LiquidColor, LiquidProperty, Liquidodour, TubeState, Volume, Uid, Tubekey,cancellationToken);
         }
 
+        public Task<DrainageLiquid> AddDrainageLiquidAsync(DateTime RecordTime, string LiquidColor, string LiquidProperty, string Liquidodour, string TubeState, float Volume, long Uid, string Tubekey, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<int> BulkAddDrainageLiquidAsync(IEnumerable<DrainageLiquid> bulkAddRequest, CancellationToken cancellationToken)
+        {
+            return await repository.BulkAddDrainageLiquidAsync(bulkAddRequest, cancellationToken); 
+        }
+
         public async Task<IEnumerable<DrainageLiquid>> FindAllByPageAsync(int pageindex, int pageLen, CancellationToken cancellationToken)
         {
             return await repository.FindAllByPageAsync(pageindex, pageLen, cancellationToken);

@@ -16,9 +16,14 @@ namespace DrainagetubeService.Domain
         {
             this.repository = repository;
         }
-        public async Task<Drainagetube> AddDrainagetubeAsync(string TubeType, string TubePosition, string TubeExtention, long Uid, CancellationToken cancellationToken)
+        public async Task<Drainagetube> AddDrainagetubeAsync(string TubeType, string TubePosition, string TubeExtention, long Uid,string TransID, CancellationToken cancellationToken)
         {
-            return await repository.AddDrainagetubeAsync(TubeType, TubePosition, TubeExtention,  Uid, cancellationToken);
+            return await repository.AddDrainagetubeAsync(TubeType, TubePosition, TubeExtention,  Uid, TransID, cancellationToken);
+        }
+
+        public async Task<IEnumerable<string>> BulkAddDrainagetubeAsync(IEnumerable<Drainagetube> tubeBulkAddRequest, CancellationToken cancellationToken)
+        {
+            return await repository.BulkAddDrainagetubeAsync(tubeBulkAddRequest, cancellationToken);
         }
 
         public async Task<IEnumerable<Drainagetube>> FindAllByPageAsync(int pageindex, int pageLen, CancellationToken cancellationToken)

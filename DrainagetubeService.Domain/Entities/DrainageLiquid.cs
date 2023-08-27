@@ -35,12 +35,13 @@ namespace DrainagetubeService.Domain.Entities
         /// <summary>
         /// 24小时引流量
         /// </summary>
-        public int Volume { get; private set; }
+        public float Volume { get; private set; }
         public string TubeKey { get; private set; }
         public Guid Key { get; private set; }
         public long Uid { get; private set; }
+        
        
-        public static DrainageLiquid Create(DateTime RecordTime, string LiquidColor, string LiquidProperty, string Liquidodour, string TubeState, int Volume, long Uid,string Tubekey)
+        public static DrainageLiquid Create(DateTime RecordTime, string LiquidColor, string LiquidProperty, string Liquidodour, string TubeState, float Volume, long Uid,string Tubekey)
         {
             DrainageLiquid drainageLiquid = new DrainageLiquid();
             drainageLiquid.CreationTime = DateTime.Now;

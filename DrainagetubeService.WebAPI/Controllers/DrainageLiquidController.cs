@@ -1,4 +1,5 @@
-﻿using DrainagetubeService.Domain;
+﻿using CommonInitializer;
+using DrainagetubeService.Domain;
 using DrainagetubeService.Domain.Entities;
 using DrainagetubeService.Domain.Events;
 using DrainagetubeService.Infrastructure;
@@ -13,7 +14,7 @@ namespace DrainagetubeService.WebAPI.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class DrainageLiquidController : ControllerBase
     {
         IDrainageLiquidDomainService _drainageLiquidDomainService;
@@ -68,27 +69,53 @@ namespace DrainagetubeService.WebAPI.Controllers
 
         [HttpPost]
         [UnitOfWork]
-        public async Task<ActionResult<string>> Add(DateTime RecordTime, string LiquidColor, string LiquidProperty, string Liquidodour, string TubeState, int Volume, long Uid, string Tubekey, CancellationToken cancellationToken)
+        public async Task<ActionResult<string>> Add(DateTime RecordTime, string LiquidColor, string LiquidProperty, string Liquidodour, string TubeState, float Volume, long Uid, string Tubekey, string TransID, CancellationToken cancellationToken)
         {
             var result = await _drainageLiquidDomainService.AddDrainageLiquidAsync(RecordTime, LiquidColor, LiquidProperty, Liquidodour, TubeState, Volume, Uid, Tubekey, cancellationToken);
             if (result == null)
             {
                 return "";
             }
-            await _mediator.Publish(new DraingeLiquidAddEvent(Uid));
+            await _mediator.Publish(new DraingeLiquidAddEvent(Uid, TransID));
             return result.ToJsonString();
 
         }
 
         [HttpPost]
-        public async Task<ActionResult<string>> Addtest(long Uid, CancellationToken cancellationToken)
+        [UnitOfWork]
+        public async Task<ActionResult<string>> BulkAdd([FromBody]BulkAddRequest bulkAddRequest, CancellationToken cancellationToken)
+        {
+
+            var list = new List<DrainageLiquid>();
+            if (bulkAddRequest == null || bulkAddRequest.bulkAddStructures.Count()==0)
+            {
+                return "";
+            }
+            foreach (var item in bulkAddRequest.bulkAddStructures)
+            {
+                list.Add(DrainageLiquid.Create(item.RecordTime, item.LiquidColor, item.LiquidProperty, item.Liquidodour, item.TubeState, item.Volume, bulkAddRequest.Uid, item.Tubekey));
+            }
+            var result = await _drainageLiquidDomainService.BulkAddDrainageLiquidAsync(list, cancellationToken);
+            if (result == 0)
+            {
+                return "";
+            }
+            var uid = bulkAddRequest.Uid;
+            var tubutransid = bulkAddRequest.TranID;
+            await _mediator.Publish(new DraingeLiquidAddEvent(uid, tubutransid));
+            return result.ToJsonString();
+
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<string>> Addtest(long Uid, string TransID, CancellationToken cancellationToken)
         {
             var result = new DrainageLiquid(); //await _drainageLiquidDomainService.AddDrainageLiquidAsync(RecordTime, LiquidColor, LiquidProperty, Liquidodour, TubeState, Volume, Uid, Tubekey, cancellationToken);
             if (result == null)
             {
                 return "";
             }
-            await _mediator.Publish(new DraingeLiquidAddEvent(Uid));
+            await _mediator.Publish(new DraingeLiquidAddEvent(Uid, TransID));
             return result.ToJsonString();
 
         }

@@ -15,16 +15,21 @@ namespace DrainagetubeService.Domain.Entities
         public string TubeExtention { get; private set; }
         public Guid Key { get; private set; }
         public long Uid { get; private set; }
+        public string TransID { get; private set; }
 
-        public void Create(string TubeType, string TubePosition, string TubeExtention,long Uid)
+        public static Drainagetube Create(string TubeType, string TubePosition, string TubeExtention, long Uid, string TransID)
         {
-            this.Uid = Uid;
-            this.CreationTime = DateTime.Now;
-            this.TubeType = TubeType;
-            this.TubePosition = TubePosition;
-            this.TubeExtention = TubeExtention;
-            Key=Guid.NewGuid(); 
-
+            return new Drainagetube()
+            {
+                Uid = Uid,
+                CreationTime = DateTime.Now,
+                TubeType = TubeType,
+                TubePosition = TubePosition,
+                TubeExtention = TubeExtention,
+                TransID = TransID,
+                Key = Guid.NewGuid()
+            };
         }
+
     }
 }

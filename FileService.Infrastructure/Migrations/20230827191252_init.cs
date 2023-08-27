@@ -12,10 +12,30 @@ namespace FileService.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "T_FS_FondConfigs",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Key1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Key2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Key3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Value1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Value2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Value3 = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_T_FS_FondConfigs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "T_FS_UploadedItems",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FileSizeInBytes = table.Column<long>(type: "bigint", nullable: false),
                     FileName = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
@@ -38,6 +58,9 @@ namespace FileService.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "T_FS_FondConfigs");
+
             migrationBuilder.DropTable(
                 name: "T_FS_UploadedItems");
         }

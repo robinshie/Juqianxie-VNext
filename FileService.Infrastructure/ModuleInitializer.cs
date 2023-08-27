@@ -10,6 +10,7 @@ namespace FileService.Infrastructure
         {
             services.AddScoped<IStorageClient, SMBStorageClient>();
             services.AddScoped<IFSRepository, FSRepository>();
+            services.AddScoped<IFondConfigsRepository, FondConfigsRepository>();
             services.AddScoped<FSDomainService>();
         }
     }

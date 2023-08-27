@@ -79,5 +79,11 @@ namespace DrainagetubeService.Infrastructure
             var list = await datas.ToListAsync(cancellationToken);
             return (len, list);
         }
+
+        public async Task AddRangeDrainagetubeAsync(IEnumerable<DrainageUserReporter> drainageUserReporter, CancellationToken cancellationToken)
+        {
+            await dbcontext.DrainageUserReporters.AddRangeAsync(drainageUserReporter, cancellationToken);
+            await dbcontext.SaveChangesAsync();
+        }
     }
 }

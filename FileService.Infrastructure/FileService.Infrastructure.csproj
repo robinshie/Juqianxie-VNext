@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CommonInitializer\CommonInitializer.csproj" />
     <ProjectReference Include="..\FileService.Domain\FileService.Domain.csproj" />
     <ProjectReference Include="..\Juqianxie.Infrastructure\Juqianxie.Infrastructure.csproj" />
   </ItemGroup>

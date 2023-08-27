@@ -37,6 +37,7 @@ namespace DrainagetubeService.Domain.Events
         {
             long uid = long.Parse(eventData.Uid);
             string Username = eventData.Username;
+            string TransID = eventData.TransID;
             DateTime CreationTime = DateTime.Parse(eventData.CreationTime);
             int intsex = int.Parse(eventData.Sex);
             Sex sex = Sex.Man;
@@ -52,19 +53,21 @@ namespace DrainagetubeService.Domain.Events
 
 
             var tubes = await _drainagetubeRepository.FindByuserAsync(uid, -1, -1, CancellationToken.None);
-            var item = tubes.OrderByDescending(u => u.CreationTime).LastOrDefault();
+            var resulttubes = tubes.Where(u => u.TransID == TransID).ToList();
             List<DrainageLiquidReporter> repo = new List<DrainageLiquidReporter>();
-            if (item == null) 
+            if (resulttubes == null || resulttubes.Count == 0)
             {
                 return;
             }
-            var liques = await _drainageLiquidRepository.FindByTubeKeysAsync(item.Key.ToString(), CancellationToken.None);
-            foreach (var lique in liques)
+            foreach (var tube in resulttubes)
             {
-                
-                repo.Add(new DrainageLiquidReporter(uid, Username, DateTime.Now, sex, Age, HospitalNumber, OperationTime,
-                    DischargeTime, SurgicalMethod, item.TubeType, lique.RecordTime, lique.LiquidColor, lique.LiquidProperty, lique.Liquidodour, lique.TubeState, lique.Volume
-                    ));
+                var liques = await _drainageLiquidRepository.FindByTubeKeysAsync(tube.Key.ToString(), CancellationToken.None);
+                foreach (var lique in liques)
+                {
+                    repo.Add(new DrainageLiquidReporter(uid, Username, DateTime.Now, sex, Age, HospitalNumber, OperationTime,
+                        DischargeTime, SurgicalMethod, tube.TubeType, lique.RecordTime, lique.LiquidColor, lique.LiquidProperty, lique.Liquidodour, lique.TubeState, lique.Volume
+                        ));
+                }
             }
             await _drainageLiquidReporterRepository.AddRangeLiquidReporter(repo, CancellationToken.None);
         }
@@ -72,9 +75,10 @@ namespace DrainagetubeService.Domain.Events
         private async Task InserterUserReport(dynamic eventData)
         {
             long uid = long.Parse(eventData.Uid);
+            string TransID = eventData.TransID;
             var tubes = await _drainagetubeRepository.FindByuserAsync(uid, -1, -1, CancellationToken.None);
-            var item = tubes.OrderByDescending(u => u.CreationTime).LastOrDefault();
-            if (item == null) 
+            var items = tubes.Where(u => u.TransID == TransID).OrderByDescending(u => u.CreationTime).ToList();
+            if (items == null || items.Count == 0)
             {
                 return;
             }
@@ -92,20 +96,26 @@ namespace DrainagetubeService.Domain.Events
             DateTime OperationTime = DateTime.Parse(eventData.OperationTime);
             DateTime DischargeTime = DateTime.Parse(eventData.DischargeTime);
             string SurgicalMethod = eventData.SurgicalMethod ?? "know";
-            
-            DrainageUserReporter reporter = DrainageUserReporter.Create(
-                 uid,
-                 Username,
-                 CreationTime,
-                 sex,
-                 Age,
-                 HospitalNumber,
-                 OperationTime,
-                 DischargeTime,
-                 SurgicalMethod,
-                 item.TubeType
-                 );
-            await _userReporterRepository.AddDrainagetubeAsync(reporter, CancellationToken.None);
+            var list = new List<DrainageUserReporter>();
+            foreach (var item in items)
+            {
+
+             list.Add(DrainageUserReporter.Create(
+             uid,
+             Username,
+             CreationTime,
+             sex,
+             Age,
+             HospitalNumber,
+             OperationTime,
+             DischargeTime,
+             SurgicalMethod,
+             item.TubeType
+             ));
+
+            }
+
+            await _userReporterRepository.AddRangeDrainagetubeAsync(list, CancellationToken.None);
         }
     }
 }

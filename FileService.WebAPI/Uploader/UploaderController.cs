@@ -1,5 +1,8 @@
-﻿using FileService.Domain;
+﻿using CommonInitializer;
+using FileService.Domain;
+using FileService.Domain.Entities;
 using FileService.Infrastructure;
+using FileService.Respository;
 using Juqianxie.ASPNETCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +17,14 @@ namespace FileService.WebAPI.Uploader
     {
         private readonly FSDbContext dbContext;
         private readonly FSDomainService domainService;
-        private readonly IFSRepository repository;
-        public UploaderController(FSDomainService domainService, FSDbContext dbContext, IFSRepository repository)
+        private readonly Domain.IFSRepository repository;
+        private readonly IFondConfigsRepository fondConfigsRepository;
+        public UploaderController(FSDomainService domainService, FSDbContext dbContext, Domain.IFSRepository repository, IFondConfigsRepository fondConfigsRepository)
         {
             this.domainService = domainService;
             this.dbContext = dbContext;
             this.repository = repository;
+            this.fondConfigsRepository = fondConfigsRepository;
         }
 
         /// <summary>
@@ -39,6 +44,15 @@ namespace FileService.WebAPI.Uploader
             {
                 return new FileExistsResponse(true, item.RemoteUrl);
             }
+        }
+        [HttpPost]
+        public async Task<IEnumerable<FondConfigs>> GetConfigs(IEnumerable<JConfig> jConfigs )
+        {
+            if (jConfigs == null)
+            {
+                return null;
+            }
+            return await fondConfigsRepository.FindAllConfigs(jConfigs);
         }
 
         //todo: 做好校验，参考OSS的接口，防止被滥用

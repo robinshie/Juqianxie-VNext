@@ -12,7 +12,7 @@ namespace DrainagetubeService.Domain.Entities
     
     public record DrainageLiquidReporter : AggregateRootEntity, IAggregateRoot, IHasCreationTime
     {
-        public DrainageLiquidReporter(long uid, string username, DateTime creationTime, Sex sex, int age, string hospitalNumber, DateTime operationTime, DateTime dischargeTime, string surgicalMethod, string tubType, DateTime recordTime, string liquidColor, string liquidProperty, string liquidodour, string tubeState, int volum)
+        public DrainageLiquidReporter(long uid, string username, DateTime creationTime, Sex sex, int age, string hospitalNumber, DateTime operationTime, DateTime dischargeTime, string surgicalMethod, string tubType, DateTime recordTime, string liquidColor, string liquidProperty, string liquidodour, string tubeState, float volum)
         {
             Uid = uid;
             Username = username;
@@ -95,7 +95,7 @@ namespace DrainagetubeService.Domain.Entities
         /// <summary>
         /// 24小时引流量
         /// </summary>
-        public int Volum { get;  set; }
+        public float Volum { get;  set; }
 
 
     }

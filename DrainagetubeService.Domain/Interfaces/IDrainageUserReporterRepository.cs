@@ -12,6 +12,7 @@ namespace DrainagetubeService.Domain
     public interface IDrainageUserReporterRepository
     {   //* 导流管 *//
         Task<DrainageUserReporter> AddDrainagetubeAsync(DrainageUserReporter drainageUserReporter , CancellationToken cancellationToken);
+        Task AddRangeDrainagetubeAsync(IEnumerable<DrainageUserReporter> drainageUserReporter, CancellationToken cancellationToken);
         Task<IEnumerable<DrainageUserReporter>> FindByuserAsync(long uid, int pageindex, int pageLen, CancellationToken cancellationToken);
         Task<IEnumerable<DrainageUserReporter>> FindAllByPageAsync(int pageindex, int pageLen, CancellationToken cancellationToken);
         Task<IEnumerable<DrainageUserReporter>> FindByuserNopageAsync(long uid, CancellationToken cancellationToken);

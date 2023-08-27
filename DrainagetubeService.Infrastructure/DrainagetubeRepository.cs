@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -22,11 +23,17 @@ namespace DrainagetubeService.Infrastructure
             this.dbcontext = dbcontext;
         }
 
-        public async Task<Drainagetube> AddDrainagetubeAsync(string TubeType, string TubePosition, string TubeExtention, long Uid, CancellationToken cancellationToken)
+        public async Task<Drainagetube> AddDrainagetubeAsync(string TubeType, string TubePosition, string TubeExtention, long Uid,string TransID ,CancellationToken cancellationToken)
         {
-            return await Add(TubeType, TubePosition, TubeExtention, Uid, cancellationToken);
+            return await Add(TubeType, TubePosition, TubeExtention, Uid, TransID, cancellationToken);
         }
 
+        public async Task<IEnumerable<string>> BulkAddDrainagetubeAsync(IEnumerable<Drainagetube> tubeBulkAddRequest, CancellationToken cancellationToken)
+        {
+            await dbcontext.Drainagetubes.AddRangeAsync(tubeBulkAddRequest,cancellationToken);
+            await dbcontext.SaveChangesAsync(cancellationToken);
+            return tubeBulkAddRequest.Select(u=>u.Key.ToString());
+        }
         public async Task<IEnumerable<Drainagetube>> FindAllByPageAsync(int pageindex, int pageLen, CancellationToken cancellationToken)
         {
             return await dbcontext.Drainagetubes.Skip((pageindex - 1) * pageLen).Take(pageLen).ToListAsync();
@@ -52,12 +59,12 @@ namespace DrainagetubeService.Infrastructure
            return await dbcontext.Drainagetubes.Where(u => u.Uid == uid).Select(u=>u.Key.ToString()).ToListAsync(cancellationToken);
         }
 
-        private async Task<Drainagetube> Add(string TubeType, string TubePosition, string TubeExtention, long Uid,CancellationToken cancellationToken)
+        private async Task<Drainagetube> Add(string TubeType, string TubePosition, string TubeExtention, long Uid,string TransID,CancellationToken cancellationToken)
         {
-            Drainagetube drainagetube = new Drainagetube();
-            drainagetube.Create(TubeType, TubePosition, TubeExtention,Uid);
+            //Drainagetube drainagetube = new Drainagetube();
+            var drainagetube = Drainagetube.Create(TubeType, TubePosition, TubeExtention,Uid, TransID);
             await dbcontext.Drainagetubes.AddAsync(drainagetube,cancellationToken);
-            await dbcontext.SaveChangesAsync();
+            await dbcontext.SaveChangesAsync(cancellationToken);
 
             return await dbcontext.Drainagetubes.FirstOrDefaultAsync(u => u.Key == drainagetube.Key, cancellationToken);
         }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DrainagetubeService.Infrastructure.Migrations
 {
-    public partial class addliquireportr : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,7 +30,7 @@ namespace DrainagetubeService.Infrastructure.Migrations
                     LiquidProperty = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Liquidodour = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TubeState = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Volum = table.Column<int>(type: "int", nullable: false),
+                    Volum = table.Column<float>(type: "real", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -78,7 +78,7 @@ namespace DrainagetubeService.Infrastructure.Migrations
                     LiquidProperty = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Liquidodour = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TubeState = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Volume = table.Column<int>(type: "int", nullable: false),
+                    Volume = table.Column<float>(type: "real", nullable: false),
                     TubeKey = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Key = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Uid = table.Column<long>(type: "bigint", nullable: false),
@@ -102,7 +102,8 @@ namespace DrainagetubeService.Infrastructure.Migrations
                     TubePosition = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TubeExtention = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Key = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Uid = table.Column<long>(type: "bigint", nullable: false)
+                    Uid = table.Column<long>(type: "bigint", nullable: false),
+                    TransID = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

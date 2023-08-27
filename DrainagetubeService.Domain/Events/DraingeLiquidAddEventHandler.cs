@@ -19,7 +19,8 @@ namespace DrainagetubeService.Domain.Events
         public Task Handle(DraingeLiquidAddEvent notification, CancellationToken cancellationToken)
         {
             var data = notification.Uid;
-            eventBus.Publish("DrainageLiquid.Liquid.Add", new { Uid = data });//发布集成时间
+            var transid = notification.Transid;
+            eventBus.Publish("DrainageLiquid.Liquid.Add", new { Uid = data, TransID = transid });//发布集成时间
             return Task.CompletedTask;
         }
     }

@@ -9,6 +9,8 @@ namespace FileService.Infrastructure
     public class FSDbContext : BaseDbContext
     {
         public DbSet<UploadedItem> UploadItems { get; private set; }
+        public DbSet<FondConfigs>  FondConfigses { get; private set; }
+
         private IMediator? mediator;
      
         public FSDbContext(DbContextOptions options, IMediator? mediator)

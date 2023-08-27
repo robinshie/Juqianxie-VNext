@@ -27,6 +27,13 @@ namespace DrainagetubeService.Infrastructure
             return await Add(RecordTime, LiquidColor, LiquidProperty, Liquidodour, TubeState, Volume, Uid, Tubekey, cancellationToken);
         }
 
+        public async Task<int> BulkAddDrainageLiquidAsync(IEnumerable<DrainageLiquid> bulkAddRequest, CancellationToken cancellationToken)
+        {
+            await dbcontext.DrainageLiquids.AddRangeAsync(bulkAddRequest, cancellationToken);
+            await dbcontext.SaveChangesAsync();
+            return bulkAddRequest.Count();
+        }
+
         public async Task<IEnumerable<DrainageLiquid>> FindAllByPageAsync(int pageindex, int pageLen, CancellationToken cancellationToken)
         {
             return await dbcontext.DrainageLiquids.Skip((pageindex - 1) * pageLen).Take(pageLen).ToListAsync();

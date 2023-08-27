@@ -18,6 +18,7 @@ namespace IdentityService.Domain
         public override async Task HandleDynamic(string eventName, dynamic eventData)
         {
             long id = eventData.Uid;
+            string transid = eventData.TransID;
             var user = await _idRepository.FindByIdAsync(id);
 
             if (user == null) { throw new NotFiniteNumberException(id); }
@@ -33,7 +34,8 @@ namespace IdentityService.Domain
                 HospitalNumber = userDetails.HospitalNumber,
                 OperationTime = userDetails.OperationTime,
                 DischargeTime = userDetails.DischargeTime,
-                SurgicalMethod = userDetails.SurgicalMethod
+                SurgicalMethod = userDetails.SurgicalMethod,
+                TransID = transid,
 
             });
         }
